@@ -20,11 +20,22 @@ def who_wins():
     elif ai_weapon == 'rock':
         if user_weapon == 'paper':
             result = 1
-        elif user_weapn == 'scissors':
+        elif user_weapon == 'scissors':
             result = -1
     return result
 
-num_games = int(input('How many games would you like to play?'))
+## only accept numbers for the number of games, retry until number is geiven
+while True:
+    try:
+        num_games = int(input('How many games would you like to play?'))
+        break
+    except:
+        print('Sorry, that is not a number, please try again')
+
+##accepted weapons
+weapons = ['rock','paper','scissors']
+user_weapon = 'none'
+
 
 ##initialise lists to hold game results
 ai_weapons = []
@@ -32,8 +43,12 @@ user_weapons = []
 results = []
 
 for i in range(num_games):
-    ai_weapon = random.choice(['rock','paper','scissors'])
-    user_weapon = input('\n Please select your weapon, rock, paper or scissors: ')
+    ai_weapon = random.choice(weapons)
+    while user_weapon not in weapons:
+        user_weapon = input('\nPlease select your weapon, rock, paper or scissors: ').lower()
+        if user_weapon not in weapons:
+            print('Not an accepted weapon, please try again')
+        
     ai_weapons.append(ai_weapon)
     user_weapons.append(user_weapon)
     results.append(who_wins())
@@ -45,7 +60,11 @@ for i in range(num_games):
         game_result = "it's a draw"
 
     print('The computer chose', ai_weapon, game_result)
+    user_weapon = 'none'
 
 agg_results = {x:results.count(x) for x in results}
 
-print('\n','Out of' ,num_games, 'you won', agg_results.get(1,None))
+if num_games > 1:
+    print('\nOut of' ,num_games, 'games, you won', agg_results.get(1,None))
+elif num_games == 1:
+    print(game_result)
