@@ -64,6 +64,7 @@ for i in range(num_games):
 
 agg_results = {x:results.count(x) for x in results}
 
+## Print results
 if num_games > 1:
     print('\nOut of' ,num_games, 'games, you won', agg_results.get(1,None))
 elif num_games == 1:
